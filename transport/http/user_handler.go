@@ -4,14 +4,14 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	useCaseI "github.com/rizkyrmsyah/gin-gonic/interfc"
+	"github.com/rizkyrmsyah/gin-gonic/usecase"
 )
 
 type HTTPUser struct {
-	useCaseInterface useCaseI.UserInterface
+	useCaseInterface usecase.UserUseCaseInterface
 }
 
-func NewUserHTTPHandler(r *gin.Engine, useCaseInterface useCaseI.UserUseCaseI) {
+func NewUserHTTPHandler(r *gin.Engine, useCaseInterface usecase.UserUseCaseInterface) {
 	handler := &HTTPUser{useCaseInterface}
 
 	api := r.Group("/api/user")
@@ -21,7 +21,7 @@ func NewUserHTTPHandler(r *gin.Engine, useCaseInterface useCaseI.UserUseCaseI) {
 }
 
 func (handler *HTTPUser) GetAll(c *gin.Context) {
-	list, err := handler.useCaseInterface.FindAll()
+	list, err := handler.useCaseInterface.GetAll()
 	if err != nil {
 		c.JSON(
 			http.StatusOK,

@@ -17,11 +17,11 @@ func NewUserRepository(db *sqlx.DB) *UserRepository {
 	}
 }
 
-func (r *UserRepository) FindAll() ([]model.User, error) {
+func (r *UserRepository) GetAll() ([]model.User, error) {
 	var query bytes.Buffer
 	var result []model.User
 
-	query.WriteString("`SELECT * FROM users WHERE deleted_at IS NULL`")
+	query.WriteString("`SELECT * FROM users WHERE deleted_at IS NULL LIMIT 20`")
 
 	return result, nil
 }

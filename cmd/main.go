@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +17,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	httpAddr := flag.String("http.addr", config.AppPort, "HTTP listen address")
+	// httpAddr := flag.String("http.addr", config.AppPort, "HTTP listen address")
 
 	db := database.NewConnection(config.DB)
 
@@ -30,5 +29,6 @@ func main() {
 	userUseCase := usecase.NewUserUseCase(user)
 
 	transportHTTP.NewUserHTTPHandler(r, userUseCase)
-	log.Info().Msg("Service Running at port : " + port)
+	r.Run(":3001")
+	// log.Info().Msg("Service Running at port : " + port)
 }

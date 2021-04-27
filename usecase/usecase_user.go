@@ -1,25 +1,23 @@
 package usecase
 
 import (
-	useCaseI "github.com/rizkyrmsyah/gin-gonic/interfc"
-	userI "github.com/rizkyrmsyah/gin-gonic/interfc"
 	"github.com/rizkyrmsyah/gin-gonic/model"
 )
 
 type UserUsecase struct {
-	userInterface userI.UserInterface
+	userInterface UserUseCaseInterface
 }
 
-func NewUserUseCase(userInterface useCaseI.UserInterface) useCaseI.UserUseCaseI {
+func NewUserUseCase(userInterface UserUseCaseInterface) UserUseCaseInterface {
 	return &UserUsecase{
 		userInterface,
 	}
 }
 
-func (userUC *UserUsecase) FindAll() ([]model.User, error) {
+func (userUC *UserUsecase) GetAll() ([]model.User, error) {
 	var list []model.User
 
-	list, err := userUC.FindAll()
+	list, err := userUC.GetAll()
 	if err != nil {
 		return list, err
 	}
