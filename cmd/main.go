@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"strconv"
 
 	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
@@ -28,6 +29,6 @@ func main() {
 	userUseCase := usecase.NewUserUseCase(user)
 
 	transportHTTP.NewUserHTTPHandler(r, userUseCase)
-	r.Run(":3001")
+	r.Run(":" + strconv.Itoa(config.AppPort))
 	// log.Info().Msg("Service Running at port : " + port)
 }
