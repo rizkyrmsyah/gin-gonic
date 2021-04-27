@@ -9,8 +9,7 @@
 3. viper env
 
 
-## Package Structure
-Pada bahasa pemrograman Golang, satu folder atau *directory* itu dikatakan satu *package* sehingga berikut ini adalah strukur *package* / *directory* dengan menerapkan konsep *clean architecture*
+## Project Structure
 
 ```
 cmd 
