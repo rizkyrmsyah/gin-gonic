@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/gin-contrib/logger"
 	"github.com/gin-gonic/gin"
 	"github.com/rizkyrmsyah/gin-gonic/cmd/database"
 	"github.com/rizkyrmsyah/gin-gonic/config"
@@ -17,13 +18,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// httpAddr := flag.String("http.addr", config.AppPort, "HTTP listen address")
-
 	db := database.NewConnection(config.DB)
+	defer db.Close()
 
 	r := gin.New()
-
-	defer db.Close()
+	r.Use(logger.SetLogger())
 
 	user := mysql.NewUserRepository(db)
 	userUseCase := usecase.NewUserUseCase(user)

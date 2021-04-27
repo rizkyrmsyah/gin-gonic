@@ -1,7 +1,7 @@
-package usecase
+package repository
 
 import "github.com/rizkyrmsyah/gin-gonic/model"
 
-type UserUseCaseI interface {
+type UserRepositoryI interface {
 	GetAll() ([]model.User, error)
 }

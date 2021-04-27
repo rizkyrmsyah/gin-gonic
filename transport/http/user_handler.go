@@ -8,10 +8,10 @@ import (
 )
 
 type HTTPUser struct {
-	useCaseInterface usecase.UserUseCaseInterface
+	useCaseInterface usecase.UserUseCaseI
 }
 
-func NewUserHTTPHandler(r *gin.Engine, useCaseInterface usecase.UserUseCaseInterface) {
+func NewUserHTTPHandler(r *gin.Engine, useCaseInterface usecase.UserUseCaseI) {
 	handler := &HTTPUser{useCaseInterface}
 
 	api := r.Group("/api/user")

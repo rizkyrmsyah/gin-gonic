@@ -5,16 +5,15 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	"github.com/rizkyrmsyah/gin-gonic/model"
+	"github.com/rizkyrmsyah/gin-gonic/repository"
 )
 
 type UserRepository struct {
 	conn *sqlx.DB
 }
 
-func NewUserRepository(db *sqlx.DB) *UserRepository {
-	return &UserRepository{
-		conn: db,
-	}
+func NewUserRepository(db *sqlx.DB) repository.UserRepositoryI {
+	return &UserRepository{conn: db}
 }
 
 func (r *UserRepository) GetAll() ([]model.User, error) {
