@@ -5,17 +5,17 @@ import (
 	"github.com/rizkyrmsyah/gin-gonic/repository"
 )
 
-type userUsecase struct {
+type UserUseCase struct {
 	userInterface repository.UserRepositoryI
 }
 
 func NewUserUseCase(userInterface repository.UserRepositoryI) UserUseCaseI {
-	return &userUsecase{
+	return &UserUseCase{
 		userInterface,
 	}
 }
 
-func (userUC *userUsecase) GetAll() ([]model.User, error) {
+func (userUC *UserUseCase) GetAll() ([]model.User, error) {
 	var list []model.User
 
 	list, err := userUC.GetAll()

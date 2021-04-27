@@ -20,10 +20,11 @@ func main() {
 	}
 
 	db := database.NewConnection(config.DB)
-	defer db.Close()
 
 	r := gin.New()
 	r.Use(logger.SetLogger())
+
+	defer db.Close()
 
 	user := mysql.NewUserRepository(db)
 	userUseCase := usecase.NewUserUseCase(user)
