@@ -19,8 +19,16 @@ func NewUserRepository(db *sqlx.DB) repository.UserRepositoryI {
 func (r *UserRepository) GetAll() ([]model.User, error) {
 	var query bytes.Buffer
 	var result []model.User
+	var queryParams []interface{}
+	var err error
 
-	query.WriteString("`SELECT * FROM users WHERE deleted_at IS NULL LIMIT 20`")
+	query.WriteString(`SELECT * FROM users LIMIT 20`)
+
+	err = r.conn.Select(&result, query.String(), queryParams...)
+
+	if err != nil {
+		return nil, err
+	}
 
 	return result, nil
 }

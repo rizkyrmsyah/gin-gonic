@@ -23,14 +23,7 @@ func NewUserHTTPHandler(r *gin.Engine, useCaseInterface usecase.UserUseCaseI) {
 func (handler *HTTPUser) GetAll(c *gin.Context) {
 	list, err := handler.useCaseInterface.GetAll()
 	if err != nil {
-		c.JSON(
-			http.StatusOK,
-			gin.H{
-				"responseCode":    "50",
-				"responseMessage": "Terjadi kesalahan pada sistem",
-			},
-		)
-		return
+		panic(err)
 	}
 
 	if len(list) == 0 {
