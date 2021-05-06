@@ -6,22 +6,31 @@ import (
 )
 
 type User struct {
-	userI repository.UserRepositoryI
+	repo repository.UserRepositoryI
 }
 
-func NewUser(userI repository.UserRepositoryI) UserUseCaseI {
+func NewUser(repo repository.UserRepositoryI) UserUseCaseI {
 	return &User{
-		userI,
+		repo,
 	}
 }
 
-func (userUC *User) GetAll() ([]model.User, error) {
-	var list []model.User
-
-	list, err := userUC.userI.GetAll()
+func (user *User) GetAll() ([]*model.User, error) {
+	resp, err := user.repo.GetAll()
 	if err != nil {
-		return list, err
+		panic(err)
 	}
 
-	return list, nil
+	data := make([]*model.User, 0)
+
+	for _, v := range resp {
+		result := &model.User{
+			Id:    v.Id,
+			Name:  v.Name.String,
+			Phone: v.Phone.String,
+		}
+		data = append(data, result)
+	}
+
+	return data, nil
 }

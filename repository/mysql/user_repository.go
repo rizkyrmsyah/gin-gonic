@@ -16,9 +16,9 @@ func NewUserRepository(db *sqlx.DB) repository.UserRepositoryI {
 	return &UserRepository{conn: db}
 }
 
-func (r *UserRepository) GetAll() ([]model.User, error) {
+func (r *UserRepository) GetAll() ([]model.UserResponse, error) {
 	var query bytes.Buffer
-	var result []model.User
+	var result []model.UserResponse
 	var queryParams []interface{}
 	var err error
 
