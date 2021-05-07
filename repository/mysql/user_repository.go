@@ -25,9 +25,7 @@ func (r *UserRepository) GetAll() ([]model.UserResponse, error) {
 	var err error
 
 	query.WriteString(`SELECT * FROM users`)
-
 	err = r.conn.Select(&result, query.String(), queryParams...)
-
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +41,7 @@ func (r *UserRepository) Store(params *model.StoreUserRequest) error {
 	query.WriteString(`(name, email, password, phone, status, created_at, updated_at)`)
 	query.WriteString(`VALUES(:name, :email, :password, :phone, :status, :created_at, :updated_at)`)
 
-	hashedPassword, hashErr := bcrypt.GenerateFromPassword([]byte(*params.Password), bcrypt.DefaultCost)
+	hashedPassword, hashErr := bcrypt.GenerateFromPassword([]byte(params.Password), bcrypt.DefaultCost)
 	if hashErr != nil {
 		return hashErr
 	}
@@ -59,7 +57,6 @@ func (r *UserRepository) Store(params *model.StoreUserRequest) error {
 	}
 
 	_, err = r.conn.NamedExec(query.String(), queryParams)
-
 	if err != nil {
 		return err
 	}

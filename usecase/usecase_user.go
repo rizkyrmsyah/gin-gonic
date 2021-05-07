@@ -25,9 +25,13 @@ func (user *User) GetAll() ([]*model.User, error) {
 
 	for _, v := range resp {
 		result := &model.User{
-			Id:    v.Id,
-			Name:  v.Name.String,
-			Phone: v.Phone.String,
+			Id:     v.Id,
+			Name:   v.Name.String,
+			Phone:  v.Phone.String,
+			Email:  v.Email.String,
+			Dob:    v.Dob.Time.String(),
+			Status: v.Status.String,
+			Image:  v.Image.String,
 		}
 		data = append(data, result)
 	}
