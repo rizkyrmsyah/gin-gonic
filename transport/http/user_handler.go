@@ -48,10 +48,10 @@ func (handler *HTTPUser) Store(c *gin.Context) {
 	}
 
 	c.JSON(
-		http.StatusOK,
+		http.StatusCreated,
 		gin.H{
 			"code":    "00",
-			"message": "success",
+			"message": "user created",
 		},
 	)
 }
