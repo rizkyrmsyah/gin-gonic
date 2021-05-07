@@ -34,3 +34,10 @@ func (user *User) GetAll() ([]*model.User, error) {
 
 	return data, nil
 }
+
+func (user *User) Store(params *model.StoreUserRequest) error {
+	if err := user.repo.Store(params); err != nil {
+		return err
+	}
+	return nil
+}
