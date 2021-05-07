@@ -7,6 +7,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/rizkyrmsyah/gin-gonic/model"
 	"github.com/rizkyrmsyah/gin-gonic/repository"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserRepository struct {
@@ -23,7 +24,7 @@ func (r *UserRepository) GetAll() ([]model.UserResponse, error) {
 	var queryParams []interface{}
 	var err error
 
-	query.WriteString(`SELECT * FROM users LIMIT 20`)
+	query.WriteString(`SELECT * FROM users`)
 
 	err = r.conn.Select(&result, query.String(), queryParams...)
 
@@ -42,10 +43,15 @@ func (r *UserRepository) Store(params *model.StoreUserRequest) error {
 	query.WriteString(`(name, email, password, phone, status, created_at, updated_at)`)
 	query.WriteString(`VALUES(:name, :email, :password, :phone, :status, :created_at, :updated_at)`)
 
+	hashedPassword, hashErr := bcrypt.GenerateFromPassword([]byte(*params.Password), bcrypt.DefaultCost)
+	if hashErr != nil {
+		return hashErr
+	}
+
 	queryParams := map[string]interface{}{
 		"name":       params.Name,
 		"email":      params.Email,
-		"password":   params.Password,
+		"password":   hashedPassword,
 		"phone":      params.Phone,
 		"status":     "active",
 		"created_at": time.Now(),
