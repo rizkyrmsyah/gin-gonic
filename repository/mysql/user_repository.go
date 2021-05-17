@@ -63,3 +63,18 @@ func (r *UserRepository) Store(params *model.StoreUserRequest) error {
 
 	return nil
 }
+
+func (r *UserRepository) Show(id int64) (*model.UserResponse, error) {
+	var query bytes.Buffer
+	var err error
+	var result = &model.UserResponse{}
+
+	query.WriteString("SELECT * FROM users WHERE id = ?")
+	err = r.conn.Select(&result, query.String(), id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}

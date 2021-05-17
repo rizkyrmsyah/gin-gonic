@@ -2,6 +2,7 @@ package http
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rizkyrmsyah/gin-gonic/model"
@@ -19,6 +20,7 @@ func NewUserHTTPHandler(r *gin.Engine, useCaseInterface usecase.UserUseCaseI) {
 	{
 		api.GET("/list", handler.GetAll)
 		api.POST("/store", handler.Store)
+		api.GET("/show/:id", handler.Show)
 	}
 }
 
@@ -52,6 +54,25 @@ func (handler *HTTPUser) Store(c *gin.Context) {
 		gin.H{
 			"code":    "00",
 			"message": "user created",
+		},
+	)
+}
+
+func (handler *HTTPUser) Show(c *gin.Context) {
+	id := c.Param("id")
+
+	intId, _ := strconv.ParseInt(id, 10, 64)
+	data, err := handler.useCaseInterface.Show(intId)
+	if err != nil {
+		panic(err)
+	}
+
+	c.JSON(
+		http.StatusOK,
+		gin.H{
+			"code":    "00",
+			"message": "success",
+			"result":  &data,
 		},
 	)
 }

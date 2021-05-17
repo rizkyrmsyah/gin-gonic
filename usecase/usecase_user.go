@@ -45,3 +45,23 @@ func (user *User) Store(params *model.StoreUserRequest) error {
 	}
 	return nil
 }
+
+func (user *User) Show(id int64) (*model.UserDetail, error) {
+	resp, err := user.repo.Show(id)
+	if err != nil {
+		return nil, err
+	}
+
+	result := &model.UserDetail{
+		Id:         resp.Id,
+		Name:       resp.Name.String,
+		Phone:      resp.Phone.String,
+		Email:      resp.Email.String,
+		Dob:        resp.Dob.Time.String(),
+		Status:     resp.Status.String,
+		Image:      resp.Image.String,
+		LastSignIn: resp.VerifiedAt.Time,
+	}
+
+	return result, nil
+}
