@@ -27,7 +27,7 @@ func main() {
 	defer db.Close()
 
 	user := mysql.NewUserRepository(db)
-	userUseCase := usecase.NewUserUseCase(user)
+	userUseCase := usecase.NewUser(user)
 
 	transportHTTP.NewUserHTTPHandler(r, userUseCase)
 	r.Run(":" + strconv.Itoa(config.AppPort))
