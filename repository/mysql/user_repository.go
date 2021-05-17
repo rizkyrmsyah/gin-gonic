@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/rizkyrmsyah/gin-gonic/helper"
 	"github.com/rizkyrmsyah/gin-gonic/model"
 	"github.com/rizkyrmsyah/gin-gonic/repository"
 	"golang.org/x/crypto/bcrypt"
@@ -51,7 +52,7 @@ func (r *UserRepository) Store(params *model.StoreUserRequest) error {
 		"email":      params.Email,
 		"password":   hashedPassword,
 		"phone":      params.Phone,
-		"status":     "active",
+		"status":     helper.ACTIVE,
 		"created_at": time.Now(),
 		"updated_at": time.Now(),
 	}
@@ -70,8 +71,7 @@ func (r *UserRepository) Show(id int64) (*model.UserResponse, error) {
 	var result = &model.UserResponse{}
 
 	query.WriteString("SELECT * FROM users WHERE id = ?")
-	err = r.conn.Select(&result, query.String(), id)
-
+	err = r.conn.Get(&result, query.String(), id)
 	if err != nil {
 		return nil, err
 	}
