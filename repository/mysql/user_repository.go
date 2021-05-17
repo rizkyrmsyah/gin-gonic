@@ -71,7 +71,7 @@ func (r *UserRepository) Show(id int64) (*model.UserResponse, error) {
 	var result = &model.UserResponse{}
 
 	query.WriteString("SELECT * FROM users WHERE id = ?")
-	err = r.conn.Get(&result, query.String(), id)
+	err = r.conn.Get(result, query.String(), id)
 	if err != nil {
 		return nil, err
 	}
