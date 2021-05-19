@@ -7,4 +7,5 @@ type UserUseCaseI interface {
 	Store(params *model.StoreUserRequest) error
 	Show(id int64) (*model.UserDetail, error)
 	Delete(id int64) error
+	Update(params *model.StoreUserRequest, id int64) error
 }

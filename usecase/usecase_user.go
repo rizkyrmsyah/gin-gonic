@@ -71,5 +71,15 @@ func (user *User) Delete(id int64) error {
 	if err != nil {
 		return err
 	}
+
+	return nil
+}
+
+func (user *User) Update(params *model.StoreUserRequest, id int64) error {
+	err := user.repo.Update(params, id)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

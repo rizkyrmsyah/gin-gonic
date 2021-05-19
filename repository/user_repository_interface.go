@@ -9,4 +9,5 @@ type UserRepositoryI interface {
 	Store(params *model.StoreUserRequest) error
 	Show(id int64) (*model.UserResponse, error)
 	Delete(id int64) error
+	Update(params *model.StoreUserRequest, id int64) error
 }

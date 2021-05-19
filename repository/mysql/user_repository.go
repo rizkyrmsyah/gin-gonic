@@ -79,6 +79,34 @@ func (r *UserRepository) Show(id int64) (*model.UserResponse, error) {
 	return result, nil
 }
 
+func (r *UserRepository) Update(params *model.StoreUserRequest, id int64) error {
+	var query bytes.Buffer
+	var err error
+
+	query.WriteString("UPDATE users SET name = :name , email = :email, phone = :phone WHERE id = :id")
+	hashedPassword, hashErr := bcrypt.GenerateFromPassword([]byte(params.Password), bcrypt.DefaultCost)
+	if hashErr != nil {
+		return hashErr
+	}
+
+	queryParams := map[string]interface{}{
+		"id":         id,
+		"name":       params.Name,
+		"email":      params.Email,
+		"password":   hashedPassword,
+		"phone":      params.Phone,
+		"status":     helper.ACTIVE,
+		"updated_at": time.Now(),
+	}
+
+	_, err = r.conn.NamedExec(query.String(), queryParams)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (r *UserRepository) Delete(id int64) error {
 	var query bytes.Buffer
 	var err error
