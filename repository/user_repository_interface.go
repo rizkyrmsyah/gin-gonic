@@ -8,4 +8,5 @@ type UserRepositoryI interface {
 	GetAll() ([]model.UserResponse, error)
 	Store(params *model.StoreUserRequest) error
 	Show(id int64) (*model.UserResponse, error)
+	Delete(id int64) error
 }

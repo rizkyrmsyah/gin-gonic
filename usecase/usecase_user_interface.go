@@ -6,4 +6,5 @@ type UserUseCaseI interface {
 	GetAll() ([]*model.User, error)
 	Store(params *model.StoreUserRequest) error
 	Show(id int64) (*model.UserDetail, error)
+	Delete(id int64) error
 }

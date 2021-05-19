@@ -78,3 +78,16 @@ func (r *UserRepository) Show(id int64) (*model.UserResponse, error) {
 
 	return result, nil
 }
+
+func (r *UserRepository) Delete(id int64) error {
+	var query bytes.Buffer
+	var err error
+
+	query.WriteString("DELETE FROM users WHERE id = ?")
+	_, err = r.conn.Exec(query.String(), id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

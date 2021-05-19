@@ -21,6 +21,7 @@ func NewUserHTTPHandler(r *gin.Engine, useCaseInterface usecase.UserUseCaseI) {
 		api.GET("/list", handler.GetAll)
 		api.POST("/store", handler.Store)
 		api.GET("/show/:id", handler.Show)
+		api.DELETE("/delete/:id", handler.Delete)
 	}
 }
 
@@ -73,6 +74,23 @@ func (handler *HTTPUser) Show(c *gin.Context) {
 			"code":    "00",
 			"message": "success",
 			"result":  &data,
+		},
+	)
+}
+
+func (handler *HTTPUser) Delete(c *gin.Context) {
+	id := c.Param("id")
+	intId, _ := strconv.ParseInt(id, 10, 64)
+	err := handler.useCaseInterface.Delete(intId)
+	if err != nil {
+		panic(err)
+	}
+
+	c.JSON(
+		http.StatusOK,
+		gin.H{
+			"code":    "00",
+			"message": "success",
 		},
 	)
 }

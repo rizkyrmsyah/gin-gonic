@@ -65,3 +65,11 @@ func (user *User) Show(id int64) (*model.UserDetail, error) {
 
 	return result, nil
 }
+
+func (user *User) Delete(id int64) error {
+	err := user.repo.Delete(id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
